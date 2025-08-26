@@ -3,6 +3,7 @@ package com.example.fooddeliveryproject.controller;
 import com.example.fooddeliveryproject.RequestBean.HotelRatingRequestBean;
 import com.example.fooddeliveryproject.ResponseBean.HotelRatingResponseBean;
 import com.example.fooddeliveryproject.service.HotelRatingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +18,8 @@ import java.util.UUID;
 public class HotelRatingController {
     private final HotelRatingService hotelRatingService;
 
-    // Create Rating
-    // Create Rating
     @PostMapping
-    public ResponseEntity<HotelRatingResponseBean> createRating(@RequestBody HotelRatingRequestBean request) {
+    public ResponseEntity<HotelRatingResponseBean> createRating(@Valid @RequestBody HotelRatingRequestBean request) {
         HotelRatingResponseBean response = hotelRatingService.createRating(request);
         return ResponseEntity.ok(response);
     }

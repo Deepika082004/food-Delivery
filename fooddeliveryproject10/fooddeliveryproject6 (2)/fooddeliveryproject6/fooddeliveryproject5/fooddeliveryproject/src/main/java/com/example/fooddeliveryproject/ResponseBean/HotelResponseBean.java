@@ -1,6 +1,7 @@
 package com.example.fooddeliveryproject.ResponseBean;
 
 import com.example.fooddeliveryproject.Entity.Hotel_Rating;
+import com.example.fooddeliveryproject.RequestBean.LocationCal;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,8 @@ public class HotelResponseBean {
 
     // Optional extra fields
     private double averageRating;
+    private LocationCal locationCal;
+    private double distance;
 
     // Example: return list of food names in this hotel
     private List<String> foodNames;

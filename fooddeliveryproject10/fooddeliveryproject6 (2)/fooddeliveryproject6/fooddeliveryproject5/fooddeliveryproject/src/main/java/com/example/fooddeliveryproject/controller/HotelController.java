@@ -7,6 +7,7 @@ import com.example.RequestBean.HotelRatingDto;
 import com.example.fooddeliveryproject.RequestBean.HotelRequestBean;
 import com.example.fooddeliveryproject.ResponseBean.HotelResponseBean;
 import com.example.fooddeliveryproject.service.HotelService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -38,14 +39,14 @@ public class HotelController {
 
     // Create a new hotel
     @PostMapping
-    public ResponseEntity<HotelResponseBean> createHotel(@RequestBody HotelRequestBean request) {
+    public ResponseEntity<HotelResponseBean> createHotel(@Valid @RequestBody HotelRequestBean request) {
         HotelResponseBean createdHotel = hotelService.createHotel(request);
         return ResponseEntity.ok(createdHotel);
     }
 
     // Create multiple hotels in bulk
     @PostMapping("/bulk")
-    public ResponseEntity<List<HotelResponseBean>> createHotels(@RequestBody List<HotelRequestBean> requests) {
+    public ResponseEntity<List<HotelResponseBean>> createHotels(@Valid @RequestBody List<HotelRequestBean> requests) {
         List<HotelResponseBean> createdHotels = hotelService.createHotels(requests);
         return ResponseEntity.ok(createdHotels);
     }
@@ -73,7 +74,7 @@ public class HotelController {
         return ResponseEntity.ok(msg);
     }
     @PostMapping("/{id}")
-    public ResponseEntity<Hotel_Rating> addRating(
+    public ResponseEntity<Hotel_Rating> addRating( @Valid
             @PathVariable UUID id,
             @RequestBody HotelRatingDto dto) {
         Hotel_Rating rating = hotelService.addRating(id, dto);
@@ -113,4 +114,12 @@ public ResponseEntity<List<Hotel>> getHotelsByLocation(@RequestParam String hote
     ) {
         return hotelService.filterHotels(foodName, hotel_address, minRating);
     }
+    @GetMapping("/hotels/nearby")
+    public List<HotelResponseBean> getNearbyHotels(
+            @RequestParam double customerLat,
+            @RequestParam double customerLng,
+            @RequestParam(defaultValue = "5") double maxDistanceKm) { // default 5 km radius
+        return hotelService.getNearestHotels(customerLat, customerLng, maxDistanceKm);
+    }
+
 }

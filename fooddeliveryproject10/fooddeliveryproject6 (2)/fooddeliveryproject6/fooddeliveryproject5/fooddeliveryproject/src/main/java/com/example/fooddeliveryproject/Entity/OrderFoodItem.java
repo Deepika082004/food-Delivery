@@ -8,14 +8,23 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Entity
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Location {
+@Builder
+@Entity
+public class OrderFoodItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
     private UUID id;
-    private String location_name;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private OrderFood order;
+
+    @ManyToOne
+    @JoinColumn(name = "food_id")
+    private Food food;
+
+    private int quantity; // store quantity here
 }

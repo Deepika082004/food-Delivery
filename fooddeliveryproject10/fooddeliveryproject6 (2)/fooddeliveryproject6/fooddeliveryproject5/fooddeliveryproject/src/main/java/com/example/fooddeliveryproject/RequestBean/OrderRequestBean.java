@@ -26,4 +26,5 @@ public class OrderRequestBean {
     @NotNull(message = "Food names cannot be empty")
     private List<String> foodNames; // Foods chosen from the hotel
     private PaymentMode paymentMode;
+    private List<OrderItemRequest> orderItems;
 }

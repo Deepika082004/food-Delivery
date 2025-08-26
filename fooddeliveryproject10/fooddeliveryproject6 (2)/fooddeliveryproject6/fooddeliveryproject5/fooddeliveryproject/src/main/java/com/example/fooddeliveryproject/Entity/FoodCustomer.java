@@ -1,6 +1,8 @@
 package com.example.fooddeliveryproject.Entity;
-
+import com.example.fooddeliveryproject.RequestBean.LocationCal;
+//import com.example.fooddeliveryproject.User.UserAccount;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,12 +28,14 @@ public class FoodCustomer {
     private String email;
     private String address;
 
+//    @OneToOne(cascade =CascadeType.ALL)
+//    @JsonIgnore
+//    @JoinColumn(name="user_id",referencedColumnName ="id")
+//    private UserAccount user;
 
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="customer_location")
-    private Location location;
+    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<FoodRating> foodRatings = new ArrayList<>();
 
     @OneToMany(mappedBy ="foodcustomer",cascade=CascadeType.ALL)
     @JsonBackReference
@@ -41,35 +45,32 @@ public class FoodCustomer {
     @JsonBackReference
     private List<Delivery> deliveries;
 
-//    @OneToMany(mappedBy = "foodcustomer", cascade = CascadeType.ALL)
-//    @JsonBackReference
-//    private List<Hotel> hotels=new ArrayList<>();
 
     @OneToMany(mappedBy = "foodcustomer", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonIgnore
     private List<DeliverymanDetail> deliverymans=new ArrayList<>();
 
     @OneToMany(mappedBy = "foodcustomer", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonIgnore
     private List<Food> foods=new ArrayList<>();
 
     @OneToOne(mappedBy = "foodcustomer")
-    @JsonBackReference
+    @JsonIgnore
     private Bill bill;
 
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonIgnore
     private List<Hotel_Rating> hotelRating;
+
+    @Embedded
+    private LocationCal locationCal;
 
 
     public void setOrder(List<OrderFood> orderList) {
         this.orders = orderList;
     }
-//
-//    public void setHotel(List<Hotel> hotelList) {
-//        this.hotels = hotelList;
-//    }
-//
+
+
     public void setFood(List<Food> foodList) {
         this.foods = foodList;
     }
@@ -89,4 +90,10 @@ public class FoodCustomer {
         return id != null ? id.hashCode() : 0;
     }
 
+    public double getLatitude() {
+        return locationCal.getLatitude();
+    }
+    public double getLongitude() {
+        return locationCal.getLongitude();
+    }
 }

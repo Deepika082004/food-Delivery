@@ -1,5 +1,6 @@
 package com.example.fooddeliveryproject.RequestBean;
 
+import com.example.fooddeliveryproject.Enum.CuisineType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,4 +22,12 @@ public class FoodRequestBean {
 
     @NotNull(message = "Hotel ID must be provided")
     private UUID hotelId;
+
+    private String category;       // "Pizza", "Biryani", "Chinese"
+    private Boolean bestseller;    // true/false
+    private String imageUrl;       // food photo
+    private Double discountPercent;
+    private String offerDescription;
+    private CuisineType cuisineType;
+
 }

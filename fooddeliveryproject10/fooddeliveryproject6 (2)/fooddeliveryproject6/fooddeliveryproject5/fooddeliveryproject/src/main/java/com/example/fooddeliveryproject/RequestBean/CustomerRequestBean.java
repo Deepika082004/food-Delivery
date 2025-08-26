@@ -25,7 +25,6 @@ public class CustomerRequestBean {
     private String email;
     @Size(min=5,max=40,message="Address length should be betwwen 4 and 40")
     private String address;
-    private LocationDto location;
     @Embedded
     private LocationCal locationCal;
 

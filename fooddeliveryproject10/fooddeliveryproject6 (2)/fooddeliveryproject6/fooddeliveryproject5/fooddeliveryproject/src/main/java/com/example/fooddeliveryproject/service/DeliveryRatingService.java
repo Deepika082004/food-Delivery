@@ -26,7 +26,7 @@ public class DeliveryRatingService {
     // Convert Entity → DTO
     public DeliveryRatingResponseBean createRating(DeliveryRatingRequestBean request) {
         DeliverymanDetail deliveryman = detailRepository.findById(request.getDeliverymanDetailId())
-                .orElseThrow(() -> new RuntimeException("Deliveryman not found"));
+                .orElseThrow(() -> new ConstraintValidationException("Error","Deliveryman not found"));
 
         DeliverymanRating rating = DeliverymanRating.builder()
                 .rating(Integer.parseInt(String.valueOf(request.getRating())))

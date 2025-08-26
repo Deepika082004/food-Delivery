@@ -14,7 +14,7 @@ public final class ConstantClass {
     public static final String INVALID = "Invalid Data";
     public static final String MISSING_FIELD = "Missing Field";
     public static final String MISSING_DATA = "Missing Data";
-    public static final String CONSTRAINT_VIOLATION = "Constraint Violation";
+    public static final String CONSTRAINT_VIOLATION = "Customer name already exists,provide new Name";
     public static final String OBJECTNOTFOUND = "ID NOT FOUND";
     public static final String EMPTY = "Provide Data";
     public static final String STATUS="Error";

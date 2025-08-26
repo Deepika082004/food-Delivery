@@ -3,6 +3,7 @@ package com.example.fooddeliveryproject.Entity;
 import com.example.fooddeliveryproject.Enum.DeliverymanStatus;
 import com.example.fooddeliveryproject.RequestBean.LocationCal;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -24,7 +25,7 @@ public class DeliverymanDetail {
     private UUID id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="delivery_pkey", referencedColumnName = "id")
-    @JsonManagedReference
+    @JsonIgnore
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private FoodCustomer foodcustomer;
     private String deliveryman_name;
@@ -32,30 +33,24 @@ public class DeliverymanDetail {
     private String deliveryman_email;
     private String deliveryman_address;
     private String Licence_no;
-    private boolean available;
+    private Boolean available;
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
     @OneToOne(mappedBy = "deliverymanDetail",cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonIgnore
     private DeliverymanRating deliverymanRating;
     @OneToOne
     @JoinColumn(name = "delivery_id", referencedColumnName = "delivery_id")
-    @JsonManagedReference
+    @JsonIgnore
     private Delivery delivery;
 
     @OneToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JsonIgnore
     private OrderFood orderFood;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "location_id")
-//    private Location currentLocation;  // Location entity
 
     @Embedded
     private LocationCal locationCal;
-    public LocationCal getLocation() {
-        return locationCal;
-    }
 
     @Enumerated(EnumType.STRING)
     private DeliverymanStatus status;
@@ -72,9 +67,11 @@ public class DeliverymanDetail {
         return id != null ? id.hashCode() : 0;
     }
 
-//    @Embedded
-//    private LocationCal locationCal;
-//    public LocationCal getCurrentLocation() {
-//        return new LocationCal(locationCal.getLatitude(), locationCal.getLongitude());
-//    }
+    public double getLatitude() {
+        return locationCal.getLatitude();
+    }
+
+    public double getLongitude() {
+        return locationCal.getLongitude();
+    }
 }

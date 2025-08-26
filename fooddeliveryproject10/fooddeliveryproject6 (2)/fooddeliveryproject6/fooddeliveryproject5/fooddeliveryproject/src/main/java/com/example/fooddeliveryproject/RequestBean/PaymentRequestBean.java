@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PaymentRequestBean {
 
-    private UUID billId;
+    private UUID orderId;
     @NotBlank(message="payMode should not be null")
     private PaymentMode paymentMode;
 }

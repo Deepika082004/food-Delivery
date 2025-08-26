@@ -26,9 +26,6 @@ public class Hotel {
     private String hotel_name;
     private String hotel_phone;
     private String hotel_address;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<OrderFood> orders;
 
     @OneToMany(mappedBy="hotel",fetch = FetchType.LAZY)
     @JsonBackReference
@@ -38,12 +35,6 @@ public class Hotel {
     @JsonManagedReference
     private List<Food> food = new ArrayList<>();
 
-
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    @JoinColumn(name="foodcustomer",referencedColumnName ="id")
-//    private FoodCustomer foodcustomer;
    @Embedded
    private LocationCal location;
     public LocationCal getLocation() {
@@ -51,6 +42,16 @@ public class Hotel {
     }
     @OneToMany(mappedBy ="hotel",cascade=CascadeType.ALL)
     private List<Bill> bills;
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Discount> discounts = new ArrayList<>();
+
+
+    @OneToMany
+    @JsonManagedReference
+    private List<OrderFood> orders = new ArrayList<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,4 +66,11 @@ public class Hotel {
     }
 
 
+    public double getLatitude() {
+        return location.getLatitude();
+    }
+
+    public double getLongitude() {
+        return location.getLongitude();
+    }
 }
